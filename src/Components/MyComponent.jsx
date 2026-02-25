@@ -5,16 +5,25 @@ function MyComponent() {
     const [date, setDate] = useState(new Date());
 
     const tick = () => {
+        console.log('clock ticking');
         setDate(new Date());
     }
 
     useEffect(() => {
-        console.log('updating document title')
+        // console.log('updating document title')
         document.title = `Clicked ${count} times`;
     }, [count]);
 
     useEffect(() => {
-        setInterval(tick, 1000);
+        console.log('starting timer');
+        const interval = setInterval(tick, 1000);
+
+        //do the cleanup - Stop the timer
+        return () => {
+            console.log('component unmounted');
+            clearInterval(interval);
+        };
+
     }, []);
 
     const addCount = () => {
